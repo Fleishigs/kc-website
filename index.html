@@ -518,8 +518,6 @@
                 const grid = document.getElementById('episodesGrid');
                 
                 items.forEach((item, index) => {
-                    if (index >= 10) return;
-                    
                     const title = item.querySelector('title').textContent;
                     const pubDate = new Date(item.querySelector('pubDate').textContent);
                     const description = item.querySelector('description').textContent;
