@@ -37,28 +37,27 @@
             left: 0;
             right: 0;
             z-index: 1000;
-            background: rgba(10, 10, 10, 0.95);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid rgba(139, 21, 56, 0.2);
+            background: rgba(0, 0, 0, 0.98);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(244, 164, 66, 0.2);
         }
 
         .nav-content {
             max-width: 1400px;
             margin: 0 auto;
-            padding: 1rem 2rem;
+            padding: 1.2rem 2rem;
             display: flex;
             align-items: center;
-            justify-content: space-between;
+            justify-content: center;
         }
 
         .logo-small {
-            height: 50px;
-            width: auto;
+            display: none;
         }
 
         .nav-links {
             display: flex;
-            gap: 2rem;
+            gap: 3rem;
             list-style: none;
             align-items: center;
         }
@@ -66,25 +65,45 @@
         .nav-links a {
             color: var(--cream);
             text-decoration: none;
-            font-weight: 500;
-            transition: color 0.3s;
+            font-weight: 600;
+            font-size: 1.05rem;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .nav-links a:after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--gold);
+            transition: width 0.3s;
         }
 
         .nav-links a:hover {
             color: var(--gold);
         }
 
+        .nav-links a:hover:after {
+            width: 100%;
+        }
+
         /* Landing Section - Background image has logo, no duplicate needed */
         .landing {
             min-height: 100vh;
+            padding-top: 70px;
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
+            justify-content: flex-end;
             text-align: center;
-            padding: 120px 2rem 4rem;
+            padding-bottom: 6rem;
+            padding-left: 2rem;
+            padding-right: 2rem;
             position: relative;
-            background: url('landing-bg.png') center center / cover no-repeat;
+            background: url('landing-bg.png') center top / cover no-repeat;
         }
 
         .landing::before {
@@ -94,15 +113,15 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: linear-gradient(to bottom, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.4) 100%);
+            background: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0) 60%, rgba(0,0,0,0.3) 85%, rgba(0,0,0,0.5) 100%);
             z-index: 0;
         }
 
         .landing-content {
             position: relative;
             z-index: 1;
-            max-width: 800px;
-            margin-top: 20vh;
+            max-width: 700px;
+            margin-bottom: 0;
         }
 
         .badge-link {
@@ -110,43 +129,47 @@
             align-items: center;
             gap: 12px;
             background: linear-gradient(135deg, rgba(139, 21, 56, 0.95), rgba(107, 15, 42, 0.95));
-            padding: 16px 32px;
+            padding: 14px 28px;
             border-radius: 50px;
             text-decoration: none;
             color: var(--cream);
             font-weight: 700;
-            font-size: 1.2rem;
-            margin-bottom: 3rem;
-            transition: all 0.3s;
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.6);
+            font-size: 1.05rem;
+            margin-bottom: 2rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 6px 20px rgba(139, 21, 56, 0.4);
             border: 2px solid rgba(244, 164, 66, 0.3);
+            animation: fadeInUp 0.8s ease 0.2s both;
         }
 
         .badge-link:hover {
             transform: translateY(-3px);
-            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.8);
+            box-shadow: 0 10px 30px rgba(139, 21, 56, 0.7);
             border-color: var(--gold);
         }
 
         .badge-24six {
-            height: 35px;
-            width: auto;
+            height: 30px;
+            width: 30px;
+            object-fit: cover;
+            border-radius: 50%;
         }
 
         .cta-button {
             display: inline-block;
             background: linear-gradient(135deg, var(--gold), var(--orange));
             color: #000;
-            padding: 18px 60px;
+            padding: 16px 56px;
             border-radius: 50px;
             text-decoration: none;
             font-weight: 800;
-            font-size: 1.3rem;
-            margin-bottom: 4rem;
-            transition: all 0.3s;
+            font-size: 1.15rem;
+            margin-bottom: 2.5rem;
+            transition: all 0.3s ease;
             box-shadow: 0 8px 30px rgba(244, 164, 66, 0.4);
             text-transform: uppercase;
             letter-spacing: 1px;
+            animation: fadeInUp 0.8s ease 0.4s both;
         }
 
         .cta-button:hover {
@@ -160,6 +183,7 @@
             gap: 1rem;
             width: 100%;
             max-width: 700px;
+            animation: fadeInUp 0.8s ease 0.6s both;
         }
 
         .link-button {
@@ -170,7 +194,8 @@
             text-decoration: none;
             color: var(--cream);
             font-weight: 600;
-            transition: all 0.3s;
+            font-size: 1rem;
+            transition: all 0.3s ease;
             backdrop-filter: blur(10px);
         }
 
@@ -179,6 +204,18 @@
             border-color: var(--gold);
             transform: translateY(-2px);
             box-shadow: 0 6px 20px rgba(139, 21, 56, 0.5);
+        }
+
+        /* Subtle fade-in animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         /* Episodes Section - Normal black background */
@@ -419,32 +456,42 @@
 
         /* Mobile Responsiveness */
         @media (max-width: 768px) {
+            .nav-content {
+                padding: 1rem 1rem;
+            }
+
             .nav-links {
-                display: none;
+                gap: 1.2rem;
+                font-size: 0.8rem;
+                flex-wrap: wrap;
+                justify-content: center;
             }
 
             .landing {
-                padding: 100px 1.5rem 3rem;
+                padding-top: 80px;
+                min-height: 100vh;
+                padding-bottom: 4rem;
             }
 
             .landing-content {
-                margin-top: 15vh;
+                margin-bottom: 1rem;
             }
 
             .badge-link {
-                padding: 14px 26px;
-                font-size: 1rem;
-                margin-bottom: 2.5rem;
+                padding: 12px 24px;
+                font-size: 0.95rem;
+                margin-bottom: 1.5rem;
             }
 
             .badge-24six {
-                height: 28px;
+                height: 26px;
+                width: 26px;
             }
 
             .cta-button {
-                padding: 16px 48px;
-                font-size: 1.1rem;
-                margin-bottom: 3rem;
+                padding: 14px 48px;
+                font-size: 1.05rem;
+                margin-bottom: 2rem;
             }
 
             .links-grid {
@@ -505,21 +552,33 @@
         }
 
         @media (max-width: 480px) {
+            .nav-links {
+                gap: 0.8rem;
+                font-size: 0.75rem;
+            }
+
             .landing {
-                padding: 90px 1rem 2rem;
+                padding-top: 90px;
+                min-height: 100vh;
+                padding-bottom: 3rem;
             }
 
             .landing-content {
-                margin-top: 10vh;
+                margin-bottom: 0.8rem;
             }
 
             .badge-link {
-                padding: 12px 20px;
-                font-size: 0.95rem;
+                padding: 11px 22px;
+                font-size: 0.9rem;
+            }
+
+            .badge-24six {
+                height: 24px;
+                width: 24px;
             }
 
             .cta-button {
-                padding: 14px 40px;
+                padding: 13px 44px;
                 font-size: 1rem;
             }
 
@@ -537,11 +596,11 @@
     <!-- Navigation -->
     <nav>
         <div class="nav-content">
-            <img src="kc-logo.jpg" alt="KC Logo" class="logo-small">
             <ul class="nav-links">
                 <li><a href="#landing">Home</a></li>
                 <li><a href="#episodes">Episodes</a></li>
-                <li><a href="https://www.instagram.com/kiddushclubpodcast/" target="_blank">Instagram</a></li>
+                <li><a href="https://buymeacoffee.com/kiddushclub/membership" target="_blank">Become a Member</a></li>
+                <li><a href="https://2ly.link/27DRp" target="_blank">Join WhatsApp</a></li>
                 <li><a href="https://kiddushclubmerch.com/" target="_blank">Merch</a></li>
             </ul>
         </div>
@@ -551,7 +610,7 @@
     <section id="landing" class="landing">
         <div class="landing-content">
             <a href="https://24six.app" target="_blank" class="badge-link">
-                <span>NUMBER ONE ON</span>
+                <span>#1 ON</span>
                 <img src="24six-logo.png" alt="24Six" class="badge-24six">
             </a>
             
@@ -563,7 +622,7 @@
                 <a href="https://kiddushclubmerch.com/" target="_blank" class="link-button">Get Merch</a>
                 <a href="https://www.instagram.com/kiddushclubpodcast/" target="_blank" class="link-button">Instagram</a>
                 <a href="https://twitter.com/kiddushclubcast" target="_blank" class="link-button">Twitter</a>
-                <a href="mailto:hock@kiddushclubpodcast.com" class="link-button">Contact Us</a>
+                <a href="/cdn-cgi/l/email-protection#deb6b1bdb59eb5b7babaabadb6bdb2abbcaeb1babdbfadaaf0bdb1b3" class="link-button">Contact Us</a>
             </div>
         </div>
     </section>
@@ -611,7 +670,7 @@
         <audio id="audioElement"></audio>
     </div>
 
-    <script>
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
         const audio = document.getElementById('audioElement');
         const player = document.getElementById('audioPlayer');
         const playbackRates = [0.5, 0.75, 1, 1.25, 1.5, 1.75, 2];
@@ -713,13 +772,4 @@
             const rect = e.currentTarget.getBoundingClientRect();
             const percent = (e.clientX - rect.left) / rect.width;
             audio.currentTime = percent * audio.duration;
-        });
-
-        audio.addEventListener('ended', () => {
-            updatePlayPauseIcon(false);
-        });
-
-        loadEpisodes();
-    </script>
-</body>
-</html>
+        }
