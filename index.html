@@ -27,6 +27,7 @@
             background: var(--black);
             color: var(--cream);
             line-height: 1.6;
+            padding-bottom: 100px;
         }
 
         /* Navigation */
@@ -87,7 +88,41 @@
             justify-content: center;
             align-items: center;
             padding: 100px 2rem 4rem;
-            background: linear-gradient(135deg, var(--deep-red) 0%, var(--burgundy) 50%, var(--dark) 100%);
+            background: var(--black);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .landing::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 50%, var(--burgundy) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, var(--deep-red) 0%, transparent 50%),
+                radial-gradient(circle at 40% 20%, var(--gold) 0%, transparent 40%),
+                radial-gradient(circle at 60% 90%, var(--orange) 0%, transparent 40%),
+                linear-gradient(135deg, var(--deep-red) 0%, var(--burgundy) 50%, var(--dark) 100%);
+            opacity: 0.8;
+            animation: gradientShift 15s ease infinite;
+            z-index: 0;
+        }
+
+        @keyframes gradientShift {
+            0%, 100% {
+                transform: scale(1) rotate(0deg);
+            }
+            50% {
+                transform: scale(1.1) rotate(5deg);
+            }
+        }
+
+        .landing > * {
+            position: relative;
+            z-index: 1;
         }
 
         .logo-main {
@@ -160,6 +195,43 @@
             box-shadow: 0 15px 40px rgba(244, 164, 66, 0.5);
         }
 
+        /* Link Buttons */
+        .link-buttons {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            max-width: 900px;
+            width: 100%;
+            margin-top: 3rem;
+        }
+
+        .link-btn {
+            background: rgba(0, 0, 0, 0.6);
+            border: 2px solid rgba(244, 164, 66, 0.3);
+            color: var(--cream);
+            text-decoration: none;
+            padding: 1rem 2rem;
+            border-radius: 15px;
+            font-weight: 600;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            backdrop-filter: blur(10px);
+        }
+
+        .link-btn:hover {
+            background: rgba(244, 164, 66, 0.2);
+            border-color: var(--gold);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(244, 164, 66, 0.3);
+        }
+
+        .link-btn span {
+            font-size: 1.2rem;
+        }
+
         /* Episodes */
         .episodes-section {
             padding: 5rem 2rem;
@@ -187,13 +259,11 @@
             border-radius: 20px;
             overflow: hidden;
             border: 2px solid rgba(244, 164, 66, 0.2);
-            transition: all 0.4s;
+            transition: border-color 0.3s;
         }
 
         .episode-card:hover {
-            transform: translateY(-10px);
             border-color: var(--gold);
-            box-shadow: 0 20px 60px rgba(244, 164, 66, 0.3);
         }
 
         .episode-image {
@@ -247,20 +317,213 @@
             font-weight: 600;
         }
 
-        .listen-btn {
+        .play-btn {
             background: var(--gold);
             color: var(--black);
             padding: 0.7rem 1.5rem;
             border-radius: 25px;
             font-weight: 700;
             font-family: 'Bebas Neue', sans-serif;
-            text-decoration: none;
+            border: none;
+            cursor: pointer;
             transition: all 0.3s;
         }
 
-        .listen-btn:hover {
+        .play-btn:hover {
             background: var(--orange);
             transform: translateY(-2px);
+        }
+
+        /* Audio Player */
+        .audio-player {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, #000000, #1a1a1a);
+            padding: 1.5rem 2rem;
+            border-top: 3px solid var(--gold);
+            z-index: 999;
+            display: none;
+            box-shadow: 0 -5px 30px rgba(0,0,0,0.5);
+        }
+
+        .audio-player.active {
+            display: block;
+        }
+
+        .player-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .player-top {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .player-image {
+            width: 70px;
+            height: 70px;
+            border-radius: 10px;
+            object-fit: cover;
+            border: 2px solid var(--gold);
+        }
+
+        .player-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .player-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.4rem;
+            color: var(--gold);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            margin-bottom: 0.3rem;
+        }
+
+        .player-time {
+            font-size: 0.9rem;
+            color: #999;
+        }
+
+        .close-player {
+            background: none;
+            border: none;
+            color: var(--cream);
+            cursor: pointer;
+            font-size: 2rem;
+            padding: 0.5rem;
+            transition: color 0.3s;
+        }
+
+        .close-player:hover {
+            color: var(--gold);
+        }
+
+        /* Progress Bar */
+        .progress-container {
+            width: 100%;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            cursor: pointer;
+            position: relative;
+            margin: 0.5rem 0;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: var(--gold);
+            border-radius: 10px;
+            width: 0%;
+            transition: width 0.1s;
+            position: relative;
+        }
+
+        .progress-bar::after {
+            content: '';
+            position: absolute;
+            right: -6px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 14px;
+            height: 14px;
+            background: var(--gold);
+            border-radius: 50%;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+        }
+
+        /* Player Controls */
+        .player-controls {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1.5rem;
+        }
+
+        .control-btn {
+            background: none;
+            border: none;
+            color: var(--cream);
+            cursor: pointer;
+            padding: 0.5rem;
+            transition: all 0.3s;
+            font-size: 1.2rem;
+        }
+
+        .control-btn:hover {
+            color: var(--gold);
+            transform: scale(1.1);
+        }
+
+        .control-btn.play-pause {
+            width: 50px;
+            height: 50px;
+            background: var(--gold);
+            color: var(--black);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+
+        .control-btn.play-pause:hover {
+            background: var(--orange);
+            transform: scale(1.05);
+        }
+
+        .speed-control {
+            background: rgba(244, 164, 66, 0.2);
+            color: var(--gold);
+            border: 1px solid var(--gold);
+            padding: 0.4rem 0.8rem;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+        }
+
+        .speed-control:hover {
+            background: var(--gold);
+            color: var(--black);
+        }
+
+        .volume-container {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .volume-slider {
+            width: 80px;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            outline: none;
+            -webkit-appearance: none;
+        }
+
+        .volume-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 12px;
+            height: 12px;
+            background: var(--gold);
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        audio {
+            display: none;
         }
 
         .loading, .error {
@@ -296,6 +559,10 @@
             .nav-links {
                 gap: 1rem;
             }
+
+            .player-content {
+                flex-wrap: wrap;
+            }
         }
     </style>
 </head>
@@ -303,7 +570,7 @@
     <!-- Nav -->
     <nav class="nav">
         <div class="nav-logo" onclick="window.scrollTo({top:0,behavior:'smooth'})">
-            <img src="kc-logo.jpg" alt="KC" onerror="this.style.display='none'">
+            <img src="kc-logo.jpg" alt="KC">
             <span class="nav-logo-text">KIDDUSH CLUB</span>
         </div>
         <ul class="nav-links">
@@ -316,21 +583,42 @@
 
     <!-- Landing -->
     <section class="landing" id="landing">
-        <img src="kc-logo.jpg" alt="Kiddush Club" class="logo-main" onerror="this.style.display='none'">
+        <img src="kc-logo.jpg" alt="Kiddush Club" class="logo-main">
         <div class="welcome-text">Welcome to</div>
         <h1 class="main-title">KIDDUSH CLUB</h1>
         <p class="tagline">News for Jews</p>
         
-        <div class="badge-container">
-            <span class="badge-text">NUMBER ONE ON</span>
-            <a href="https://24six.app" target="_blank">
-                <img src="24six-logo.png" alt="24Six" class="badge-logo" onerror="this.style.display='none'">
-            </a>
-        </div>
+        <a href="https://24six.app" target="_blank" style="text-decoration: none;">
+            <div class="badge-container">
+                <span class="badge-text">NUMBER ONE ON</span>
+                <img src="24six-logo.png" alt="24Six" class="badge-logo">
+            </div>
+        </a>
 
         <button class="cta-button" onclick="document.getElementById('episodes').scrollIntoView({behavior:'smooth'})">
             Listen Now →
         </button>
+
+        <div class="link-buttons">
+            <a href="https://2ly.link/27DRp" target="_blank" class="link-btn">
+                <span>💬</span> Join Our WhatsApp
+            </a>
+            <a href="https://buymeacoffee.com/kiddushclub/membership" target="_blank" class="link-btn">
+                <span>⭐</span> Become A Subscriber
+            </a>
+            <a href="https://kiddushclubmerch.com/" target="_blank" class="link-btn">
+                <span>👕</span> Get Merch
+            </a>
+            <a href="https://www.instagram.com/kiddushclubpodcast/" target="_blank" class="link-btn">
+                <span>📸</span> Instagram
+            </a>
+            <a href="https://twitter.com/kiddushclubcast" target="_blank" class="link-btn">
+                <span>🐦</span> Twitter
+            </a>
+            <a href="mailto:hock@kiddushclubpodcast.com" class="link-btn">
+                <span>✉️</span> Contact Us
+            </a>
+        </div>
     </section>
 
     <!-- Episodes -->
@@ -341,7 +629,53 @@
         </div>
     </section>
 
+    <!-- Audio Player -->
+    <div class="audio-player" id="audioPlayer">
+        <div class="player-content">
+            <div class="player-top">
+                <img id="playerImage" class="player-image" src="kc-logo.jpg" alt="">
+                <div class="player-info">
+                    <div class="player-title" id="playerTitle">Episode Title</div>
+                    <div class="player-time">
+                        <span id="currentTime">0:00</span> / <span id="totalTime">0:00</span>
+                    </div>
+                </div>
+                <button class="close-player" onclick="closePlayer()">✕</button>
+            </div>
+            
+            <div class="progress-container" id="progressContainer">
+                <div class="progress-bar" id="progressBar"></div>
+            </div>
+
+            <div class="player-controls">
+                <button class="control-btn" onclick="skipTime(-30)" title="Back 30s">⏪</button>
+                <button class="control-btn" onclick="skipTime(-10)" title="Back 10s">◀</button>
+                <button class="control-btn play-pause" id="playPauseBtn" onclick="togglePlayPause()">▶</button>
+                <button class="control-btn" onclick="skipTime(10)" title="Forward 10s">▶</button>
+                <button class="control-btn" onclick="skipTime(30)" title="Forward 30s">⏩</button>
+                <button class="speed-control" id="speedBtn" onclick="changeSpeed()">1x</button>
+                <div class="volume-container">
+                    <button class="control-btn" onclick="toggleMute()">🔊</button>
+                    <input type="range" class="volume-slider" id="volumeSlider" min="0" max="100" value="100" onchange="changeVolume(this.value)">
+                </div>
+            </div>
+
+            <audio id="audioElement" preload="metadata"></audio>
+        </div>
+    </div>
+
     <script>
+        let currentSpeed = 1;
+        const speeds = [0.5, 0.75, 1, 1.25, 1.5, 1.75, 2];
+        let speedIndex = 2;
+
+        function formatTime(seconds) {
+            if (isNaN(seconds)) return '0:00';
+            const mins = Math.floor(seconds / 60);
+            const secs = Math.floor(seconds % 60);
+            return `${mins}:${secs.toString().padStart(2, '0')}`;
+        }
+
         function formatDuration(seconds) {
             const hours = Math.floor(seconds / 3600);
             const minutes = Math.floor((seconds % 3600) / 60);
@@ -369,6 +703,88 @@
             return text.length > 150 ? text.substring(0, 150) + '...' : text;
         }
 
+        function playEpisode(title, audioUrl, imageUrl) {
+            const player = document.getElementById('audioPlayer');
+            const audio = document.getElementById('audioElement');
+            const playerTitle = document.getElementById('playerTitle');
+            const playerImage = document.getElementById('playerImage');
+
+            playerTitle.textContent = title;
+            playerImage.src = imageUrl || 'kc-logo.jpg';
+            audio.src = audioUrl;
+            
+            player.classList.add('active');
+            audio.play();
+        }
+
+        function closePlayer() {
+            const player = document.getElementById('audioPlayer');
+            const audio = document.getElementById('audioElement');
+            
+            audio.pause();
+            audio.src = '';
+            player.classList.remove('active');
+        }
+
+        function togglePlayPause() {
+            const audio = document.getElementById('audioElement');
+            const btn = document.getElementById('playPauseBtn');
+            
+            if (audio.paused) {
+                audio.play();
+                btn.textContent = '⏸';
+            } else {
+                audio.pause();
+                btn.textContent = '▶';
+            }
+        }
+
+        function skipTime(seconds) {
+            const audio = document.getElementById('audioElement');
+            audio.currentTime += seconds;
+        }
+
+        function changeSpeed() {
+            const audio = document.getElementById('audioElement');
+            const btn = document.getElementById('speedBtn');
+            
+            speedIndex = (speedIndex + 1) % speeds.length;
+            currentSpeed = speeds[speedIndex];
+            audio.playbackRate = currentSpeed;
+            btn.textContent = currentSpeed + 'x';
+        }
+
+        function changeVolume(value) {
+            const audio = document.getElementById('audioElement');
+            audio.volume = value / 100;
+        }
+
+        function toggleMute() {
+            const audio = document.getElementById('audioElement');
+            audio.muted = !audio.muted;
+        }
+
+        function updateProgress() {
+            const audio = document.getElementById('audioElement');
+            const progressBar = document.getElementById('progressBar');
+            const currentTime = document.getElementById('currentTime');
+            const totalTime = document.getElementById('totalTime');
+            
+            const percent = (audio.currentTime / audio.duration) * 100;
+            progressBar.style.width = percent + '%';
+            
+            currentTime.textContent = formatTime(audio.currentTime);
+            totalTime.textContent = formatTime(audio.duration);
+        }
+
+        function seekTo(e) {
+            const audio = document.getElementById('audioElement');
+            const progressContainer = document.getElementById('progressContainer');
+            const rect = progressContainer.getBoundingClientRect();
+            const percent = (e.clientX - rect.left) / rect.width;
+            audio.currentTime = percent * audio.duration;
+        }
+
         function createEpisodeCard(episode) {
             const card = document.createElement('div');
             card.className = 'episode-card';
@@ -385,7 +801,9 @@
                     <p class="episode-description">${cleanDescription(episode.description)}</p>
                     <div class="episode-footer">
                         <span class="episode-duration">⏱ ${formatDuration(episode.duration)}</span>
-                        <a href="${episode.link}" target="_blank" class="listen-btn">Listen</a>
+                        <button class="play-btn" onclick='playEpisode(\`${episode.title.replace(/`/g, "")}\`, "${episode.audioUrl}", "${episode.image}")'>
+                            ▶ Play
+                        </button>
                     </div>
                 </div>
             `;
@@ -412,16 +830,19 @@
                 grid.innerHTML = '';
                 
                 items.forEach((item) => {
+                    const enclosure = item.querySelector('enclosure');
                     const episode = {
                         title: item.querySelector('title')?.textContent || 'Untitled',
-                        link: item.querySelector('link')?.textContent || '#',
                         description: item.querySelector('description')?.textContent || '',
                         pubDate: item.querySelector('pubDate')?.textContent || '',
-                        duration: parseInt(item.querySelector('itunes\\:duration')?.textContent || '0'),
-                        image: item.querySelector('itunes\\:image')?.getAttribute('href') || 'kc-logo.jpg'
+                        duration: parseInt(item.querySelector('itunes\\:duration, duration')?.textContent || '0'),
+                        image: item.querySelector('itunes\\:image')?.getAttribute('href') || 'kc-logo.jpg',
+                        audioUrl: enclosure?.getAttribute('url') || ''
                     };
                     
-                    grid.appendChild(createEpisodeCard(episode));
+                    if (episode.audioUrl) {
+                        grid.appendChild(createEpisodeCard(episode));
+                    }
                 });
                 
             } catch (error) {
@@ -435,7 +856,21 @@
             }
         }
 
-        document.addEventListener('DOMContentLoaded', loadEpisodes);
+        document.addEventListener('DOMContentLoaded', () => {
+            loadEpisodes();
+            
+            const audio = document.getElementById('audioElement');
+            const progressContainer = document.getElementById('progressContainer');
+            
+            audio.addEventListener('timeupdate', updateProgress);
+            audio.addEventListener('play', () => {
+                document.getElementById('playPauseBtn').textContent = '⏸';
+            });
+            audio.addEventListener('pause', () => {
+                document.getElementById('playPauseBtn').textContent = '▶';
+            });
+            progressContainer.addEventListener('click', seekTo);
+        });
     </script>
 </body>
 </html>
