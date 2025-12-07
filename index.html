@@ -290,6 +290,12 @@
             margin-bottom: 1.2rem;
         }
 
+        .episode-buttons {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
         .play-btn {
             background: linear-gradient(135deg, var(--gold), var(--orange));
             color: #000;
@@ -299,7 +305,7 @@
             font-weight: 700;
             cursor: pointer;
             transition: all 0.3s;
-            width: 100%;
+            flex: 1;
             font-size: 1rem;
             text-transform: uppercase;
             letter-spacing: 0.5px;
@@ -308,6 +314,33 @@
         .play-btn:hover {
             transform: scale(1.03);
             box-shadow: 0 6px 20px rgba(244, 164, 66, 0.4);
+        }
+
+        .download-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid rgba(244, 164, 66, 0.4);
+            color: var(--gold);
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            flex-shrink: 0;
+        }
+
+        .download-btn:hover {
+            background: rgba(244, 164, 66, 0.2);
+            border-color: var(--gold);
+            transform: scale(1.1);
+        }
+
+        .download-btn svg {
+            width: 20px;
+            height: 20px;
+            fill: currentColor;
         }
 
         /* Modern Compact Audio Player */
@@ -558,18 +591,15 @@
             }
 
             .landing {
-                padding-top: 0;
+                padding-top: 70px;
                 min-height: 100vh;
                 padding-bottom: 2rem;
-            }
-
-            .landing::before {
-                top: 70px;
+                background-position: center top;
             }
 
             .landing-content {
                 margin-bottom: 0;
-                margin-top: calc(70px + 30vh);
+                margin-top: 25vh;
             }
 
             .badge-link {
@@ -782,7 +812,12 @@
                             <div class="episode-title">${title}</div>
                             <div class="episode-date">${pubDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</div>
                             <div class="episode-description">${cleanDesc}</div>
-                            <button class="play-btn" onclick='playEpisode(${JSON.stringify({ title, image, audioUrl })})'>Play Episode</button>
+                            <div class="episode-buttons">
+                                <button class="play-btn" onclick='playEpisode(${JSON.stringify({ title, image, audioUrl })})'>Play Episode</button>
+                                <a href="${audioUrl}" download class="download-btn" title="Download Episode">
+                                    <svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
+                                </a>
+                            </div>
                         </div>
                     `;
                     grid.appendChild(card);
