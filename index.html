@@ -791,7 +791,8 @@
 
         async function loadEpisodes() {
             try {
-                const response = await fetch('https://feed.podbean.com/kiddushclub/feed.xml');
+                // Using CORS proxy to avoid blocking
+                const response = await fetch('https://api.allorigins.win/raw?url=' + encodeURIComponent('https://feed.podbean.com/kiddushclub/feed.xml'));
                 const text = await response.text();
                 const parser = new DOMParser();
                 const xml = parser.parseFromString(text, 'application/xml');
